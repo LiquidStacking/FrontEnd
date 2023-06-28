@@ -32,7 +32,7 @@ function Container({ activeTab }) {
   };
 
   return (
-    <div className={`${stylesContainer.container}`}>
+    <div className={`${stylesContainer.container} ${isConnected ? stylesContainer.connected : ''}`}>
       {activeTab === "1" && (
         <>
           <div className={`${stylesContainer.empty}`}></div>
@@ -61,7 +61,8 @@ function Container({ activeTab }) {
           isConnected={isConnected} // Pass isConnected as a prop
           setIsConnected={setIsConnected} // Pass setIsConnected as a prop
           handleConnect={handleConnect}
-          />          {isConnected && <WalletAddress stxAddress={stxAddress} />}
+          />          
+          {isConnected && <WalletAddress stxAddress={stxAddress} />}
           <Info stxBalance={stxBalance}/>
         </>
       )}

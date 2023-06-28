@@ -11,3 +11,7 @@
 .empty {
     height:30px;
 }
+
+.container.connected {
+    height: 360px;
+  }
