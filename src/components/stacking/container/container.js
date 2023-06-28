@@ -11,6 +11,7 @@ import {useState} from "react"
 function Container({ activeTab }) {
   const [stxAddress, setStxAddress] = useState("");
   const [stxBalance, setStxBalance] = useState("");
+  const [isConnected, setIsConnected] = useState(false);
 
 
   let imageToShow;
@@ -26,14 +27,25 @@ function Container({ activeTab }) {
 
   }
 
+  const handleConnect = () => {
+    setIsConnected(true);
+  };
+
   return (
     <div className={`${stylesContainer.container}`}>
       {activeTab === "1" && (
         <>
           <div className={`${stylesContainer.empty}`}></div>
           <InputBox image={imageToShow} />
-          <ConnectWallet activeTab={activeTab} setStxAddress={setStxAddress} setStxBalance={setStxBalance} />
-          <WalletAddress stxAddress={stxAddress} />
+          <ConnectWallet 
+          activeTab={activeTab} 
+          setStxAddress={setStxAddress} 
+          setStxBalance={setStxBalance} 
+          isConnected={isConnected} // Pass isConnected as a prop
+          setIsConnected={setIsConnected} // Pass setIsConnected as a prop
+          handleConnect={handleConnect}
+          />
+          {isConnected && <WalletAddress stxAddress={stxAddress} />}
           <Info stxBalance={stxBalance}/>
         </>
       )}
@@ -42,8 +54,14 @@ function Container({ activeTab }) {
         <>
           <div className={`${stylesContainer.empty}`}></div>
           <InputBox image={imageToShow} />
-          <ConnectWallet activeTab={activeTab} setStxAddress={setStxAddress} setStxBalance={setStxBalance} />
-          <WalletAddress stxAddress={stxAddress} />
+          <ConnectWallet 
+          activeTab={activeTab} 
+          setStxAddress={setStxAddress} 
+          setStxBalance={setStxBalance} 
+          isConnected={isConnected} // Pass isConnected as a prop
+          setIsConnected={setIsConnected} // Pass setIsConnected as a prop
+          handleConnect={handleConnect}
+          />          {isConnected && <WalletAddress stxAddress={stxAddress} />}
           <Info stxBalance={stxBalance}/>
         </>
       )}

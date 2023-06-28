@@ -4,11 +4,16 @@ import { useEffect, useState } from "react";
 import { getBalance } from "../../../services/axios";
 
 
-function ConnectWallet( {activeTab, setStxAddress, setStxBalance} ) {  
+function ConnectWallet({
+  activeTab, 
+  setStxAddress, 
+  setStxBalance,
+  handleConnect,
+  setIsConnected,
+  isConnected
+}) {  
   const appConfig = new AppConfig(['store_write', 'publish_data']);
   const userSession = new UserSession({appConfig});
-  const [isConnected, setIsConnected] = useState(false);
-
   const connect = () => {
     const myAppName = "Liquid Staking";
     const myAppIcon = window.location.origin + '/my_logo.png';
@@ -19,13 +24,14 @@ function ConnectWallet( {activeTab, setStxAddress, setStxBalance} ) {
         icon: myAppIcon,
       },
       onFinish: async (res) => {
-        setIsConnected(true);
         window.alert("Connection Succeed!");
         console.log(res.authResponse);
         console.log(res.authResponsePayload);
         console.log(res.authResponsePayload.profile.stxAddress.testnet);
         const stxAddress = res.authResponsePayload.profile.stxAddress.testnet;
         setStxAddress(stxAddress);
+        setIsConnected(true);
+
         // console.log(Address.TESTNET_ACCOUNT_URL + stxAddress);
         // console.log(HttpServices);
         const response = await getBalance(stxAddress);
