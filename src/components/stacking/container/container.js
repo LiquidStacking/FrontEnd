@@ -4,8 +4,15 @@ import Info from "./info";
 import stylesContainer from "./container.module.css";
 import STXImage from "../../../images/STX.png";
 import stSTXImage from "../../../images/stSTX.png";
+import WalletAddress from "./walletAddress";
+import {useState} from "react"
+
 
 function Container({ activeTab }) {
+  const [stxAddress, setStxAddress] = useState("");
+  const [stxBalance, setStxBalance] = useState("");
+
+
   let imageToShow;
   let connectWalletState;
 
@@ -25,8 +32,9 @@ function Container({ activeTab }) {
         <>
           <div className={`${stylesContainer.empty}`}></div>
           <InputBox image={imageToShow} />
-          <ConnectWallet activeTab={activeTab}/>
-          <Info />
+          <ConnectWallet activeTab={activeTab} setStxAddress={setStxAddress} setStxBalance={setStxBalance} />
+          <WalletAddress stxAddress={stxAddress} />
+          <Info stxBalance={stxBalance}/>
         </>
       )}
 
@@ -34,8 +42,9 @@ function Container({ activeTab }) {
         <>
           <div className={`${stylesContainer.empty}`}></div>
           <InputBox image={imageToShow} />
-          <ConnectWallet activeTab={activeTab}/>
-          <Info />
+          <ConnectWallet activeTab={activeTab} setStxAddress={setStxAddress} setStxBalance={setStxBalance} />
+          <WalletAddress stxAddress={stxAddress} />
+          <Info stxBalance={stxBalance}/>
         </>
       )}
     </div>

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getBalance } from "../../../services/axios";
 
 
-function ConnectWallet( {activeTab} ) {  
+function ConnectWallet( {activeTab, setStxAddress, setStxBalance} ) {  
   const appConfig = new AppConfig(['store_write', 'publish_data']);
   const userSession = new UserSession({appConfig});
   const [isConnected, setIsConnected] = useState(false);
@@ -25,9 +25,11 @@ function ConnectWallet( {activeTab} ) {
         console.log(res.authResponsePayload);
         console.log(res.authResponsePayload.profile.stxAddress.testnet);
         const stxAddress = res.authResponsePayload.profile.stxAddress.testnet;
+        setStxAddress(stxAddress);
         // console.log(Address.TESTNET_ACCOUNT_URL + stxAddress);
         // console.log(HttpServices);
         const response = await getBalance(stxAddress);
+        setStxBalance(response);
         console.log(response);
       }
     })

@@ -1,9 +1,25 @@
 import stylesInfo from "./info.module.css";
 
 
-function Info() {  
+function Info( {stxBalance} ) {  
       return (
           <div className = {`${stylesInfo.containerOut}`}>
+            <div className = {`${stylesInfo.containerIn}`}>
+              <div className = {`${stylesInfo.leftCol}`}>
+                STX Current Balance
+              </div>
+              <div className = {`${stylesInfo.rightCol}`}>
+                {stxBalance} STX
+              </div>  
+            </div>  
+            <div className = {`${stylesInfo.containerIn}`}>
+              <div className = {`${stylesInfo.leftCol}`}>
+                stSTX Current Balance
+              </div>
+              <div className = {`${stylesInfo.rightCol}`}>
+                0 stSTX
+              </div>  
+            </div>            
             <div className = {`${stylesInfo.containerIn}`}>
               <div className = {`${stylesInfo.leftCol}`}>
                 You will receive
