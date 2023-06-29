@@ -4,12 +4,12 @@ import stylesStacking from "./stacking.module.css";
 import {useState} from "react"
 
 function Stacking() {  
-  const [activeTab, setActiveTab] = useState('1');
+  const [stackToggle, setStackToggle] = useState('1');
 
       return (
         <div className = {`${stylesStacking.container}`}> 
-                <div><StackUnstackBtn activeTab={activeTab} setActiveTab={setActiveTab} /></div>
-                <div><Container activeTab={activeTab} /></div>
+                <div><StackUnstackBtn stackToggle={stackToggle} setStackToggle={setStackToggle} /></div>
+                <div><Container stackToggle={stackToggle} /></div>
                 {/* <div className={`${stylesDotMenu.dropdown} ${stylesDotMenu.dropbtn}` }   */}
         </div>
       );

@@ -1,5 +1,5 @@
 import InputBox from "./inputBox";
-import ConnectWallet from "./connectWallet";
+import ConnectStkUnstkBtn from "./connectStkUnstBtn";
 import Info from "./info";
 import stylesContainer from "./container.module.css";
 import STXImage from "../../../images/STX.png";
@@ -8,7 +8,7 @@ import WalletAddress from "./walletAddress";
 import {useState} from "react"
 
 
-function Container({ activeTab }) {
+function Container({ stackToggle }) {
   const [stxAddress, setStxAddress] = useState("");
   const [stxBalance, setStxBalance] = useState("");
   const [isConnected, setIsConnected] = useState(false);
@@ -17,13 +17,13 @@ function Container({ activeTab }) {
   let imageToShow;
   let connectWalletState;
 
-  if (activeTab === "1") {
-    imageToShow = STXImage; // Set the image for activeTab 1
-    connectWalletState = "connected"; // Set the state for activeTab 1
+  if (stackToggle === "1") {
+    imageToShow = STXImage; // Set the image for stackToggle 1
+    connectWalletState = "connected"; // Set the state for stackToggle 1
 
-  } else if (activeTab === "2") {
-    imageToShow = stSTXImage; // Set the image for activeTab 2
-    connectWalletState = "disconnected"; // Set the state for activeTab 2
+  } else if (stackToggle === "2") {
+    imageToShow = stSTXImage; // Set the image for stackToggle 2
+    connectWalletState = "disconnected"; // Set the state for stackToggle 2
 
   }
 
@@ -33,12 +33,12 @@ function Container({ activeTab }) {
 
   return (
     <div className={`${stylesContainer.container} ${isConnected ? stylesContainer.connected : ''}`}>
-      {activeTab === "1" && (
+      {stackToggle === "1" && (
         <>
           <div className={`${stylesContainer.empty}`}></div>
           <InputBox image={imageToShow} />
-          <ConnectWallet 
-          activeTab={activeTab} 
+          <ConnectStkUnstkBtn 
+          stackToggle={stackToggle} 
           setStxAddress={setStxAddress} 
           setStxBalance={setStxBalance} 
           isConnected={isConnected} // Pass isConnected as a prop
@@ -50,12 +50,12 @@ function Container({ activeTab }) {
         </>
       )}
 
-      {activeTab === "2" && (
+      {stackToggle === "2" && (
         <>
           <div className={`${stylesContainer.empty}`}></div>
           <InputBox image={imageToShow} />
-          <ConnectWallet 
-          activeTab={activeTab} 
+          <ConnectStkUnstkBtn 
+          stackToggle={stackToggle} 
           setStxAddress={setStxAddress} 
           setStxBalance={setStxBalance} 
           isConnected={isConnected} // Pass isConnected as a prop
