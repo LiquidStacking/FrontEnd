@@ -8,7 +8,7 @@ function ConnectStkUnstkBtn({
   stackToggle, 
   setStxAddress, 
   setStxBalance,
-  handleConnect,
+  // handleConnect,
   setIsConnected,
   isConnected
 }) {  
