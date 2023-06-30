@@ -1,14 +1,14 @@
-import stylesConnectWallet from "./connectWallet.module.css";
+import stylesConnectStkUnstkBtn from "./connectStkUnstkBtn.module.css";
 import { AppConfig, UserSession, showConnect } from '@stacks/connect';
 import { useEffect, useState } from "react";
 import { getBalance } from "../../../services/axios";
 
 
-function ConnectWallet({
-  activeTab, 
+function ConnectStkUnstkBtn({
+  stackToggle, 
   setStxAddress, 
   setStxBalance,
-  handleConnect,
+  // handleConnect,
   setIsConnected,
   isConnected
 }) {  
@@ -44,14 +44,22 @@ function ConnectWallet({
     // }
   }
 
-  const checkWallet = () => {
+  const stack = () => {
+    window.alert("STACK");
+  }
 
+  const unstack = () => {
+    window.alert("UNSTACK");
+  }
+
+  const errorFunc = () => {
+    window.alert("ERROR");
   }
 
       return (
-        <div className = {`${stylesConnectWallet.container}`}>
-          <div className = {`${stylesConnectWallet.button}`} style={{ backgroundColor: activeTab === "1" ? '' : 'purple' }} onClick={connect}>
-            {isConnected ? "Connected" : "Connect Wallet"}
+        <div className = {`${stylesConnectStkUnstkBtn.container}`}>
+          <div className = {`${stylesConnectStkUnstkBtn.button}`} style={{ backgroundColor: !isConnected ? "" : stackToggle === "1" ? "#F47D2D" : 'purple' }} onClick={!isConnected ? connect : stackToggle === "1" ? stack : stackToggle === "2" ? unstack : errorFunc}>
+            {!isConnected ? "Connect Wallet" : stackToggle === "1" ? "Stack STX" : stackToggle = "2" ? "Unstack STX" : "Error"}
           </div>
         </div>
 
@@ -59,4 +67,4 @@ function ConnectWallet({
       );
   }
 
-export default ConnectWallet;
+export default ConnectStkUnstkBtn;
