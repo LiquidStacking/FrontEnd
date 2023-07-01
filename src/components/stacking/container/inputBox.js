@@ -13,6 +13,7 @@ function InputBox({ stackToggle, image }) {
             console.log(e.target.value);
             setStxAmount(e.target.value);
             }} />
+          <input type="number" placeholder="amount" />
         </div>
       </div>
       <div className={`${stylesInputBox.Max}`}>Max</div>
