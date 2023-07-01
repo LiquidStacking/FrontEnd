@@ -57,7 +57,7 @@ function ConnectStkUnstkBtn({
   }
 
       return (
-        <div className = {`${stylesConnectStkUnstkBtn.container}`}>
+<div className={`${stylesConnectStkUnstkBtn.container}`} style={{ zIndex: 9999 }}>
           <div className = {`${stylesConnectStkUnstkBtn.button}`} style={{ backgroundColor: !isConnected ? "" : stackToggle === "1" ? "#F47D2D" : 'purple' }} onClick={!isConnected ? connect : stackToggle === "1" ? stack : stackToggle === "2" ? unstack : errorFunc}>
             {!isConnected ? "Connect Wallet" : stackToggle === "1" ? "Stack STX" : stackToggle = "2" ? "Unstack STX" : "Error"}
           </div>
