@@ -5,14 +5,13 @@ import stylesContainer from "./container.module.css";
 import STXImage from "../../../images/STX.png";
 import stSTXImage from "../../../images/stSTX.png";
 import WalletAddress from "./walletAddress";
-import {useState} from "react"
-
+import { useState } from "react";
 
 function Container({ stackToggle }) {
   const [stxAddress, setStxAddress] = useState("");
   const [stxBalance, setStxBalance] = useState("");
   const [isConnected, setIsConnected] = useState(false);
-
+  const [stxAmount, setStxAmount] = useState(null);
 
   let imageToShow;
   let connectWalletState;
@@ -36,13 +35,16 @@ function Container({ stackToggle }) {
       {stackToggle === "1" && (
         <>
           <div className={`${stylesContainer.empty}`}></div>
-          <InputBox image={imageToShow} />
+          <InputBox
+          image={imageToShow}
+          setStxAmount={setStxAmount} />
           <ConnectStkUnstkBtn 
           stackToggle={stackToggle} 
           setStxAddress={setStxAddress} 
           setStxBalance={setStxBalance} 
           isConnected={isConnected} // Pass isConnected as a prop
           setIsConnected={setIsConnected} // Pass setIsConnected as a prop
+          stxAmount={stxAmount}
           handleConnect={handleConnect}
           />
           {isConnected && <WalletAddress stxAddress={stxAddress} />}
@@ -60,6 +62,7 @@ function Container({ stackToggle }) {
           setStxBalance={setStxBalance} 
           isConnected={isConnected} // Pass isConnected as a prop
           setIsConnected={setIsConnected} // Pass setIsConnected as a prop
+          stxAmount={stxAmount}
           handleConnect={handleConnect}
           />          
           {isConnected && <WalletAddress stxAddress={stxAddress} />}

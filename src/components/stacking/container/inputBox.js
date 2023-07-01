@@ -1,17 +1,19 @@
 import React from "react";
 import stylesInputBox from "./inputBox.module.css";
 
-function InputBox({ stackToggle, image }) {
+function InputBox({ image, setStxAmount }) {
   return (
     <div className={`${stylesInputBox.flexInput}`}>
       <div>
         <div className={`${stylesInputBox.STXLogo}`}>
           <img src={image} alt="STX Logo" />
         </div>
-        {/* Connect Wallet 영역을 가려서 온클릭 이벤트 방해 */}
-        {/* <div>
-          <input type="number" placeholder="amount" />
-        </div> */}
+        <div>
+          <input type="number" placeholder="amount" onChange={(e) => {
+            console.log(e.target.value);
+            setStxAmount(e.target.value);
+            }} />
+        </div>
       </div>
       <div className={`${stylesInputBox.Max}`}>Max</div>
     </div>

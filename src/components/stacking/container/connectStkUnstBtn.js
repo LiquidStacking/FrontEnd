@@ -2,7 +2,8 @@ import stylesConnectStkUnstkBtn from "./connectStkUnstkBtn.module.css";
 import { AppConfig, UserSession, showConnect } from '@stacks/connect';
 import { useEffect, useState } from "react";
 import { getBalance } from "../../../services/axios";
-
+import { makeContractCall, uintCV } from "@stacks/transactions";
+const BigNum = require("bn.js");
 
 function ConnectStkUnstkBtn({
   stackToggle, 
@@ -10,7 +11,8 @@ function ConnectStkUnstkBtn({
   setStxBalance,
   // handleConnect,
   setIsConnected,
-  isConnected
+  isConnected,
+  stxAmount
 }) {  
   const appConfig = new AppConfig(['store_write', 'publish_data']);
   const userSession = new UserSession({appConfig});
@@ -28,9 +30,11 @@ function ConnectStkUnstkBtn({
         console.log(res.authResponse);
         console.log(res.authResponsePayload);
         console.log(res.authResponsePayload.profile.stxAddress.testnet);
+        console.log(res.authResponsePayload.public_keys[0]);
         const stxAddress = res.authResponsePayload.profile.stxAddress.testnet;
         setStxAddress(stxAddress);
         setIsConnected(true);
+        // console.log(getAddressFromPublicKey(res.authResponsePayload.public_keys[0]));
 
         // console.log(Address.TESTNET_ACCOUNT_URL + stxAddress);
         // console.log(HttpServices);
@@ -46,6 +50,19 @@ function ConnectStkUnstkBtn({
 
   const stack = () => {
     window.alert("STACK");
+    console.log(stxAmount);
+    console.log(uintCV(stxAmount));
+    // const txOptions = {
+    //   contractAddress: "ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4.StackedSTX",
+    //   contractName: "StackedSTX",
+    //   functionName: "stack",
+    //   functionArgs: [uintCV(stxAmount)],
+    //   senderKey:
+    //     "b244296d5907de9864c0b0d51f98a13c52890be0404e83f273144cd5b9960eed01",
+    //   // attempt to fetch this contracts interface and validate the provided functionArgs
+    //   validateWithAbi: true,
+    //   network: new StacksTestnet(), // for mainnet, use `StacksMainnet()`
+    // };
   }
 
   const unstack = () => {
