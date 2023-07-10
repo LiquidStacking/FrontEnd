@@ -1,7 +1,7 @@
 import React from "react";
 import stylesInputBox from "./inputBox.module.css";
 
-function InputBox({ stackToggle, image }) {
+function InputBox({ setStxAmount, image }) {
   return (
     <div className={`${stylesInputBox.flexInput}`}>
       <div>
