@@ -9,6 +9,7 @@ function ConnectStkUnstkBtn({
   stackToggle, 
   setStxAddress, 
   setStxBalance,
+  setStStxBalance,
   // handleConnect,
   setIsConnected,
   isConnected,
@@ -26,20 +27,16 @@ function ConnectStkUnstkBtn({
         icon: myAppIcon,
       },
       onFinish: async (res) => {
-        window.alert("Connection Succeed!");
-        console.log(res.authResponse);
-        console.log(res.authResponsePayload);
-        console.log(res.authResponsePayload.profile.stxAddress.testnet);
-        console.log(res.authResponsePayload.public_keys[0]);
         const stxAddress = res.authResponsePayload.profile.stxAddress.testnet;
         setStxAddress(stxAddress);
         setIsConnected(true);
-        // console.log(getAddressFromPublicKey(res.authResponsePayload.public_keys[0]));
-
-        // console.log(Address.TESTNET_ACCOUNT_URL + stxAddress);
-        // console.log(HttpServices);
+        
         const response = await getBalance(stxAddress);
-        setStxBalance(response);
+        console.log(response);
+        let stxBalance = response?.stx?.balance;
+        let stStxBalance = response?.fungible_tokens["ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4.StackedSTX::mock-stacked-stx"]?.balance;
+        setStxBalance(stxBalance);
+        setStStxBalance(stStxBalance);
         console.log(response);
       }
     })

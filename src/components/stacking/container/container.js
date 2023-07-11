@@ -1,5 +1,5 @@
 import InputBox from "./inputBox";
-import ConnectStkUnstkBtn from "./connectStkUnstBtn";
+import ConnectStkUnstkBtn from "./connectStkUnstkBtn";
 import Info from "./info";
 import stylesContainer from "./container.module.css";
 import STXImage from "../../../images/STX.png";
@@ -9,7 +9,8 @@ import { useState } from "react";
 
 function Container({ stackToggle }) {
   const [stxAddress, setStxAddress] = useState("");
-  const [stxBalance, setStxBalance] = useState("");
+  const [stxBalance, setStxBalance] = useState(0);
+  const [stStxBalance, setStStxBalance] = useState(0);
   const [isConnected, setIsConnected] = useState(false);
   const [stxAmount, setStxAmount] = useState(null);
 
@@ -37,18 +38,20 @@ function Container({ stackToggle }) {
           <div className={`${stylesContainer.empty}`}></div>
           <InputBox
           image={imageToShow}
-          setStxAmount={setStxAmount} />
+          setStxAmount={setStxAmount}
+          stxBalance={stxBalance} />
           <ConnectStkUnstkBtn 
           stackToggle={stackToggle} 
           setStxAddress={setStxAddress} 
           setStxBalance={setStxBalance} 
+          setStStxBalance={setStStxBalance}
           isConnected={isConnected} // Pass isConnected as a prop
           setIsConnected={setIsConnected} // Pass setIsConnected as a prop
           stxAmount={stxAmount}
           handleConnect={handleConnect}
           />
           {isConnected && <WalletAddress stxAddress={stxAddress} />}
-          <Info stxBalance={stxBalance}/>
+          <Info stxBalance={stxBalance} stStxBalance={stStxBalance}/>
         </>
       )}
 
@@ -60,13 +63,14 @@ function Container({ stackToggle }) {
           stackToggle={stackToggle} 
           setStxAddress={setStxAddress} 
           setStxBalance={setStxBalance} 
+          setStStxBalance={setStStxBalance}
           isConnected={isConnected} // Pass isConnected as a prop
           setIsConnected={setIsConnected} // Pass setIsConnected as a prop
           stxAmount={stxAmount}
           handleConnect={handleConnect}
           />          
           {isConnected && <WalletAddress stxAddress={stxAddress} />}
-          <Info stxBalance={stxBalance}/>
+          <Info stxBalance={stxBalance} stStxBalance={stStxBalance} />
         </>
       )}
     </div>
