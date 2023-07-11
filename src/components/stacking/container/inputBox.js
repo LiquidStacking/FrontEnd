@@ -22,6 +22,7 @@ function InputBox({ setStxAmount, stxBalance, image }) {
           console.log("click");
           // let stxBalRef = stxBalance;
           inputRef.current.value = stxBalance;
+          setStxAmount(stxBalance);
         }}>Max</div>
     </div>
   );

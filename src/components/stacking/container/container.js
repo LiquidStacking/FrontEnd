@@ -41,7 +41,8 @@ function Container({ stackToggle }) {
           setStxAmount={setStxAmount}
           stxBalance={stxBalance} />
           <ConnectStkUnstkBtn 
-          stackToggle={stackToggle} 
+          stackToggle={stackToggle}
+          stxAddress={stxAddress} 
           setStxAddress={setStxAddress} 
           setStxBalance={setStxBalance} 
           setStStxBalance={setStStxBalance}
