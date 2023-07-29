@@ -40,8 +40,7 @@ function ConnectStkUnstkBtn({
         const response = await getBalance(stxAddress);
         console.log(response);
         let stxBalance = response?.stx?.balance;
-        console.log(response?.fungible_tokens["ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4.StackedSTX_2::mock-stacked-stx"]);
-        let stStxBalance = typeof(response?.fungible_tokens["ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4.StackedSTX_2::mock-stacked-stx"]) === "undefined" ? 0 : response?.fungible_tokens["ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4.StackedSTX_2::mock-stacked-stx"]?.balance;
+        let stStxBalance = response?.fungible_tokens["ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4.StackedSTX_3::mock-stacked-stx"]?.balance;
         setStxBalance(stxBalance);
         setStStxBalance(stStxBalance);
         console.log(response);

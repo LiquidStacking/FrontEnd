@@ -1,18 +1,18 @@
 import InputBox from "./inputBox";
-import ConnectStkUnstkBtn from "./connectStkUnstBtn";
+import ConnectStkUnstkBtn from "./connectStkUnstkBtn";
 import Info from "./info";
 import stylesContainer from "./container.module.css";
 import STXImage from "../../../images/STX.png";
 import stSTXImage from "../../../images/stSTX.png";
 import WalletAddress from "./walletAddress";
-import {useState} from "react"
-
+import { useState } from "react";
 
 function Container({ stackToggle }) {
   const [stxAddress, setStxAddress] = useState("");
-  const [stxBalance, setStxBalance] = useState("");
+  const [stxBalance, setStxBalance] = useState(0);
+  const [stStxBalance, setStStxBalance] = useState(0);
   const [isConnected, setIsConnected] = useState(false);
-  const [stxAmount, setStxAmount] = useState(0);
+  const [stxAmount, setStxAmount] = useState(null);
 
   let imageToShow;
   let connectWalletState;
@@ -36,18 +36,24 @@ function Container({ stackToggle }) {
       {stackToggle === "1" && (
         <>
           <div className={`${stylesContainer.empty}`}></div>
-          <InputBox image={imageToShow} />
+          <InputBox
+          image={imageToShow}
+          setStxAmount={setStxAmount}
+          stxBalance={stxBalance} />
           <ConnectStkUnstkBtn 
           stxAmount={stxAmount}
-          stackToggle={stackToggle} 
+          stackToggle={stackToggle}
+          stxAddress={stxAddress}
           setStxAddress={setStxAddress} 
           setStxBalance={setStxBalance} 
+          setStStxBalance={setStStxBalance}
           isConnected={isConnected} // Pass isConnected as a prop
           setIsConnected={setIsConnected} // Pass setIsConnected as a prop
+          stxAmount={stxAmount}
           handleConnect={handleConnect}
           />
           {isConnected && <WalletAddress stxAddress={stxAddress} />}
-          <Info stxBalance={stxBalance}/>
+          <Info stxBalance={stxBalance} stStxBalance={stStxBalance}/>
         </>
       )}
 
@@ -62,12 +68,14 @@ function Container({ stackToggle }) {
           stxAddress={stxAddress} 
           setStxAddress={setStxAddress} 
           setStxBalance={setStxBalance} 
+          setStStxBalance={setStStxBalance}
           isConnected={isConnected} // Pass isConnected as a prop
           setIsConnected={setIsConnected} // Pass setIsConnected as a prop
+          stxAmount={stxAmount}
           handleConnect={handleConnect}
           />          
           {isConnected && <WalletAddress stxAddress={stxAddress} />}
-          <Info stxBalance={stxBalance}/>
+          <Info stxBalance={stxBalance} stStxBalance={stStxBalance} />
         </>
       )}
     </div>
