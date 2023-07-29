@@ -53,9 +53,11 @@ function Container({ stackToggle }) {
       {stackToggle === "2" && (
         <>
           <div className={`${stylesContainer.empty}`}></div>
-          <InputBox image={imageToShow} />
+          <InputBox image={imageToShow} 
+          setStxAmount={setStxAmount} />
           <ConnectStkUnstkBtn 
           stackToggle={stackToggle} 
+          stxAddress={stxAddress} 
           setStxAddress={setStxAddress} 
           setStxBalance={setStxBalance} 
           isConnected={isConnected} // Pass isConnected as a prop
