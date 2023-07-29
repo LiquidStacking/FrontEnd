@@ -12,7 +12,7 @@ function Container({ stackToggle }) {
   const [stxAddress, setStxAddress] = useState("");
   const [stxBalance, setStxBalance] = useState("");
   const [isConnected, setIsConnected] = useState(false);
-
+  const [stxAmount, setStxAmount] = useState(0);
 
   let imageToShow;
   let connectWalletState;
@@ -38,6 +38,7 @@ function Container({ stackToggle }) {
           <div className={`${stylesContainer.empty}`}></div>
           <InputBox image={imageToShow} />
           <ConnectStkUnstkBtn 
+          stxAmount={stxAmount}
           stackToggle={stackToggle} 
           setStxAddress={setStxAddress} 
           setStxBalance={setStxBalance} 
@@ -56,6 +57,7 @@ function Container({ stackToggle }) {
           <InputBox image={imageToShow} 
           setStxAmount={setStxAmount} />
           <ConnectStkUnstkBtn 
+          stxAmount={stxAmount}
           stackToggle={stackToggle} 
           stxAddress={stxAddress} 
           setStxAddress={setStxAddress} 
