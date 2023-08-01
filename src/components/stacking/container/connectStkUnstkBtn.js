@@ -2,7 +2,7 @@ import stylesConnectStkUnstkBtn from "./connectStkUnstkBtn.module.css";
 import { AppConfig, UserSession, showConnect } from '@stacks/connect';
 import { useEffect, useState } from "react";
 import { getBalance } from "../../../services/axios";
-import { AnchorMode, PostConditionMode, uintCV, FungibleConditionCode, makeStandardSTXPostCondition } from "@stacks/transactions";
+import { AnchorMode, PostConditionMode, uintCV, FungibleConditionCode, makeStandardSTXPostCondition, makeStandardFungiblePostCondition, createAssetInfo } from "@stacks/transactions";
 import { StacksTestnet } from "@stacks/network";
 import { useConnect } from "@stacks/connect-react";
 
@@ -56,7 +56,7 @@ function ConnectStkUnstkBtn({
     const account = stxAddress;
     const comparator = FungibleConditionCode.GreaterEqual;
     // assuming the Stacks (STX) balance before the transaction is 12346
-    const amount = new BigNum(0);
+    const amount = new BigNum(stxAmount);
   
     const standardSTXPostCondition = makeStandardSTXPostCondition(
       account,
@@ -95,11 +95,16 @@ function ConnectStkUnstkBtn({
     const comparator = FungibleConditionCode.GreaterEqual;
     // assuming the Stacks (STX) balance before the transaction is 12346
     const amount = new BigNum(0);
-  
-    const standardSTXPostCondition = makeStandardSTXPostCondition(
+    let contractAddress = "ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4";
+    let contractName = "StackedSTX_3";
+    let assetName = "mock-stacked-stx";
+
+    const assetInfo = createAssetInfo(contractAddress, contractName, assetName);
+    const standardSTXPostCondition = makeStandardFungiblePostCondition(
       account,
       comparator,
-      amount
+      amount,
+      assetInfo
     );
     console.log(stxAmount);
     console.log(uintCV(stxAmount));
