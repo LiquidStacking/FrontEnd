@@ -2,7 +2,7 @@ import stylesConnectStkUnstkBtn from "./connectStkUnstkBtn.module.css";
 import { AppConfig, UserSession, showConnect } from '@stacks/connect';
 import { useEffect, useState } from "react";
 import { getBalance } from "../../../services/axios";
-import { AnchorMode, PostConditionMode, uintCV, FungibleConditionCode, makeStandardSTXPostCondition } from "@stacks/transactions";
+import { AnchorMode, PostConditionMode, uintCV, FungibleConditionCode, makeStandardSTXPostCondition, makeStandardFungiblePostCondition, createAssetInfo } from "@stacks/transactions";
 import { StacksTestnet } from "@stacks/network";
 import { useConnect } from "@stacks/connect-react";
 
@@ -40,7 +40,7 @@ function ConnectStkUnstkBtn({
         const response = await getBalance(stxAddress);
         console.log(response);
         let stxBalance = response?.stx?.balance;
-        let stStxBalance = response?.fungible_tokens["ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4.StackedSTX::mock-stacked-stx"]?.balance;
+        let stStxBalance = response?.fungible_tokens["ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4.StackedSTX_3::mock-stacked-stx"]?.balance;
         setStxBalance(stxBalance);
         setStStxBalance(stStxBalance);
         console.log(response);
@@ -56,7 +56,7 @@ function ConnectStkUnstkBtn({
     const account = stxAddress;
     const comparator = FungibleConditionCode.GreaterEqual;
     // assuming the Stacks (STX) balance before the transaction is 12346
-    const amount = new BigNum(0);
+    const amount = new BigNum(stxAmount);
   
     const standardSTXPostCondition = makeStandardSTXPostCondition(
       account,
@@ -69,7 +69,7 @@ function ConnectStkUnstkBtn({
       network: new StacksTestnet(),
       anchorMode: AnchorMode.Any,
       contractAddress: "ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4",
-      contractName: "StackedSTX",
+      contractName: "StackedSTX_3",
       functionName: "stack",
       functionArgs: [uintCV(stxAmount)],
       postConditionMode: PostConditionMode.Deny,
@@ -89,9 +89,47 @@ function ConnectStkUnstkBtn({
     });
   }
 
-  const unstack = () => {
+  const unstack = async () => {
     window.alert("UNSTACK");
+    const account = stxAddress;
+    const comparator = FungibleConditionCode.GreaterEqual;
+    // assuming the Stacks (STX) balance before the transaction is 12346
+    const amount = new BigNum(0);
+    let contractAddress = "ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4";
+    let contractName = "StackedSTX_3";
+    let assetName = "mock-stacked-stx";
 
+    const assetInfo = createAssetInfo(contractAddress, contractName, assetName);
+    const standardSTXPostCondition = makeStandardFungiblePostCondition(
+      account,
+      comparator,
+      amount,
+      assetInfo
+    );
+    console.log(stxAmount);
+    console.log(uintCV(stxAmount));
+    doContractCall({
+      network: new StacksTestnet(),
+      anchorMode: AnchorMode.Any,
+      contractAddress: "ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4",
+      contractName: "StackedSTX_3",
+      functionName: "unstack",
+      functionArgs: [uintCV(stxAmount)],
+      postConditionMode: PostConditionMode.Allow,
+      postConditions: [standardSTXPostCondition],
+      onFinish: (data) => {
+        console.log("onFinish:", data);
+        window
+          .open(
+            `https://explorer.stacks.co/txid/${data.txId}?chain=testnet`,
+            "_blank"
+          )
+          .focus();
+      },
+      onCancel: () => {
+        console.log("onCancel:", "Transaction was canceled");
+      },
+    });
   }
 
   const errorFunc = () => {

@@ -41,8 +41,9 @@ function Container({ stackToggle }) {
           setStxAmount={setStxAmount}
           stxBalance={stxBalance} />
           <ConnectStkUnstkBtn 
+          stxAmount={stxAmount}
           stackToggle={stackToggle}
-          stxAddress={stxAddress} 
+          stxAddress={stxAddress}
           setStxAddress={setStxAddress} 
           setStxBalance={setStxBalance} 
           setStStxBalance={setStStxBalance}
@@ -59,9 +60,12 @@ function Container({ stackToggle }) {
       {stackToggle === "2" && (
         <>
           <div className={`${stylesContainer.empty}`}></div>
-          <InputBox image={imageToShow} />
+          <InputBox image={imageToShow} 
+          setStxAmount={setStxAmount} />
           <ConnectStkUnstkBtn 
+          stxAmount={stxAmount}
           stackToggle={stackToggle} 
+          stxAddress={stxAddress} 
           setStxAddress={setStxAddress} 
           setStxBalance={setStxBalance} 
           setStStxBalance={setStStxBalance}
