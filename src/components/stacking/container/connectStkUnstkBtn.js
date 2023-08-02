@@ -115,7 +115,7 @@ function ConnectStkUnstkBtn({
       contractName: "StackedSTX_3",
       functionName: "unstack",
       functionArgs: [uintCV(stxAmount)],
-      postConditionMode: PostConditionMode.Deny,
+      postConditionMode: PostConditionMode.Allow,
       postConditions: [standardSTXPostCondition],
       onFinish: (data) => {
         console.log("onFinish:", data);
