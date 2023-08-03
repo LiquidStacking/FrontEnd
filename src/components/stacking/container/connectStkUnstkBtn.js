@@ -11,6 +11,7 @@ const BigNum = require("bn.js");
 function ConnectStkUnstkBtn({
   stackToggle, 
   stxAddress,
+  stxBalance,
   setStxAddress, 
   setStxBalance,
   setStStxBalance,
@@ -63,6 +64,8 @@ function ConnectStkUnstkBtn({
       comparator,
       amount
     );
+    console.log(stxBalance);
+
     console.log(stxAmount);
     console.log(uintCV(stxAmount));
     doContractCall({
