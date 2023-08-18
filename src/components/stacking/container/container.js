@@ -42,6 +42,8 @@ function Container({ stackToggle }) {
           stxBalance={stxBalance} />
           <ConnectStkUnstkBtn 
           stxAmount={stxAmount}
+          stxBalance={stxBalance}
+          stStxBalance={stStxBalance}
           stackToggle={stackToggle}
           stxAddress={stxAddress}
           setStxAddress={setStxAddress} 
@@ -49,7 +51,6 @@ function Container({ stackToggle }) {
           setStStxBalance={setStStxBalance}
           isConnected={isConnected} // Pass isConnected as a prop
           setIsConnected={setIsConnected} // Pass setIsConnected as a prop
-          stxAmount={stxAmount}
           handleConnect={handleConnect}
           />
           {isConnected && <WalletAddress stxAddress={stxAddress} />}
@@ -64,6 +65,8 @@ function Container({ stackToggle }) {
           setStxAmount={setStxAmount} />
           <ConnectStkUnstkBtn 
           stxAmount={stxAmount}
+          stxBalance={stxBalance}
+          stStxBalance={stStxBalance}
           stackToggle={stackToggle} 
           stxAddress={stxAddress} 
           setStxAddress={setStxAddress} 
@@ -71,7 +74,6 @@ function Container({ stackToggle }) {
           setStStxBalance={setStStxBalance}
           isConnected={isConnected} // Pass isConnected as a prop
           setIsConnected={setIsConnected} // Pass setIsConnected as a prop
-          stxAmount={stxAmount}
           handleConnect={handleConnect}
           />          
           {isConnected && <WalletAddress stxAddress={stxAddress} />}

@@ -20,7 +20,7 @@ function Info({ stxBalance, stStxBalance }) {
       </div>
       <div className={`${stylesInfo.containerIn}`}>
         <div className={`${stylesInfo.leftCol}`}>Exchange Rate</div>
-        <div className={`${stylesInfo.rightCol}`}>1 STX = 0.9505 stSTX</div>
+        <div className={`${stylesInfo.rightCol}`}>1 STX = 0.87 stSTX</div>
       </div>
       <div className={`${stylesInfo.containerIn}`}>
         <div className={`${stylesInfo.leftCol}`}>Annual percentage rate</div>

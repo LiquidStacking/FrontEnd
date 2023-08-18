@@ -5,12 +5,15 @@ import { getBalance } from "../../../services/axios";
 import { AnchorMode, PostConditionMode, uintCV, FungibleConditionCode, makeStandardSTXPostCondition, makeStandardFungiblePostCondition, createAssetInfo } from "@stacks/transactions";
 import { StacksTestnet } from "@stacks/network";
 import { useConnect } from "@stacks/connect-react";
+import { formatSmallToBig } from "../../utils/math";
 
 const BigNum = require("bn.js");
 
 function ConnectStkUnstkBtn({
   stackToggle, 
   stxAddress,
+  stxBalance,
+  stStxBalance,
   setStxAddress, 
   setStxBalance,
   setStStxBalance,
@@ -23,6 +26,7 @@ function ConnectStkUnstkBtn({
 
   const appConfig = new AppConfig(['store_write', 'publish_data']);
   const userSession = new UserSession({appConfig});
+
   const connect = () => {
     const myAppName = "Liquid Staking";
     const myAppIcon = window.location.origin + '/my_logo.png';
@@ -54,39 +58,52 @@ function ConnectStkUnstkBtn({
   const stack = async () => {
     window.alert("STACK");
     const account = stxAddress;
-    const comparator = FungibleConditionCode.GreaterEqual;
+    const comparator = FungibleConditionCode.LessEqual;
     // assuming the Stacks (STX) balance before the transaction is 12346
-    const amount = new BigNum(stxAmount);
+    
+    const amount = new BigNum(formatSmallToBig(stxAmount))
+    // const amount = new BigNum(stxAmount);
+    console.log(formatSmallToBig(stxAmount));
+    console.log(stxBalance);
+    if (stxBalance < formatSmallToBig(stxAmount)) {
+      window.alert("Not enough STX balance. Try again.");
+    } else {
+
+      const standardSTXPostCondition = makeStandardSTXPostCondition(
+        account,
+        comparator,
+        stxBalance
+      );
   
-    const standardSTXPostCondition = makeStandardSTXPostCondition(
-      account,
-      comparator,
-      amount
-    );
-    console.log(stxAmount);
-    console.log(uintCV(stxAmount));
-    doContractCall({
-      network: new StacksTestnet(),
-      anchorMode: AnchorMode.Any,
-      contractAddress: "ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4",
-      contractName: "StackedSTX_3",
-      functionName: "stack",
-      functionArgs: [uintCV(stxAmount)],
-      postConditionMode: PostConditionMode.Deny,
-      postConditions: [standardSTXPostCondition],
-      onFinish: (data) => {
-        console.log("onFinish:", data);
-        window
-          .open(
-            `https://explorer.stacks.co/txid/${data.txId}?chain=testnet`,
-            "_blank"
-          )
-          .focus();
-      },
-      onCancel: () => {
-        console.log("onCancel:", "Transaction was canceled");
-      },
-    });
+      console.log(uintCV(amount));
+  
+      doContractCall({
+        network: new StacksTestnet(),
+        anchorMode: AnchorMode.Any,
+        contractAddress: "ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4",
+        contractName: "StackedSTX_3",
+        functionName: "stack",
+        functionArgs: [uintCV(amount)],
+        postConditionMode: PostConditionMode.Deny,
+        postConditions: [standardSTXPostCondition],
+        
+        onFinish: (data) => {
+          console.log("onFinish:", data);
+          window
+            .open(
+              `https://explorer.stacks.co/txid/${data.txId}?chain=testnet`,
+              "_blank"
+            )
+            .focus();
+        },
+        onCancel: () => {
+          console.log("onCancel:", "Transaction was canceled");
+        },
+      });
+    }
+    // console.log(new BigNum(formatSmallToBig(stxAmount)));
+  
+    
   }
 
   const unstack = async () => {
@@ -100,36 +117,46 @@ function ConnectStkUnstkBtn({
     let assetName = "mock-stacked-stx";
 
     const assetInfo = createAssetInfo(contractAddress, contractName, assetName);
-    const standardSTXPostCondition = makeStandardFungiblePostCondition(
-      account,
-      comparator,
-      amount,
-      assetInfo
-    );
-    console.log(stxAmount);
-    console.log(uintCV(stxAmount));
-    doContractCall({
-      network: new StacksTestnet(),
-      anchorMode: AnchorMode.Any,
-      contractAddress: "ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4",
-      contractName: "StackedSTX_3",
-      functionName: "unstack",
-      functionArgs: [uintCV(stxAmount)],
-      postConditionMode: PostConditionMode.Allow,
-      postConditions: [standardSTXPostCondition],
-      onFinish: (data) => {
-        console.log("onFinish:", data);
-        window
-          .open(
-            `https://explorer.stacks.co/txid/${data.txId}?chain=testnet`,
-            "_blank"
-          )
-          .focus();
-      },
-      onCancel: () => {
-        console.log("onCancel:", "Transaction was canceled");
-      },
-    });
+
+    console.log(stStxBalance);
+    console.log(formatSmallToBig(stxAmount));
+    if (stStxBalance < formatSmallToBig(stxAmount)) {
+      window.alert("Not enough stSTX balance. Try again.");
+    } else {
+      const amount = new BigNum(formatSmallToBig(stxAmount))
+      const standardSTXPostCondition = makeStandardFungiblePostCondition(
+        account,
+        comparator,
+        amount,
+        assetInfo
+      );
+      console.log(stxAmount);
+      console.log(uintCV(formatSmallToBig(stxAmount)));
+
+      doContractCall({
+        network: new StacksTestnet(),
+        anchorMode: AnchorMode.Any,
+        contractAddress: "ST32XWNSBQ77DHYAD0CN57FQ1THTYPSEFV08HWGE4",
+        contractName: "StackedSTX_3",
+        functionName: "unstack",
+        functionArgs: [uintCV(amount)],
+        postConditionMode: PostConditionMode.Allow,
+        postConditions: [standardSTXPostCondition],
+        onFinish: (data) => {
+          console.log("onFinish:", data);
+          window
+            .open(
+              `https://explorer.stacks.co/txid/${data.txId}?chain=testnet`,
+              "_blank"
+            )
+            .focus();
+        },
+        onCancel: () => {
+          console.log("onCancel:", "Transaction was canceled");
+        },
+      });
+    }
+    
   }
 
   const errorFunc = () => {
